@@ -18,7 +18,8 @@ class CreateNodesTable extends Migration
             $table->string('name');
             $table->string('lat');
             $table->string('lng');
-            $table->float('mast_height');
+            $table->float('mast_height')->default(1);
+            $table->string('status')->default('Offline');
             $table->timestamps();
         });
     }

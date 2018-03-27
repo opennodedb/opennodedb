@@ -2,13 +2,16 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 class Node extends Model
 {
+    public function sourceConnections()
+    {
+        return $this->hasMany(Connection::class, 'source_id');
+    }
+
     public function connections()
     {
-        return $this->hasMany(Connection::class, 'source_id')->orWhere('destination_id', $this->id);
+        return $this->sourceConnections()->orWhere('destination_id', $this->id);
     }
 
     public function connectTo(Node $node, string $technology) : Connection

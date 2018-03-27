@@ -2,9 +2,16 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 class Connection extends Model
 {
-    protected $fillable = ['source_id', 'destination_id', 'technology'];
+    public function source()
+    {
+        return $this->belongsTo(Node::class, 'source_id');
+    }
+
+    public function destination()
+    {
+        return $this->belongsTo(Node::class, 'destination_id');
+    }
+
 }

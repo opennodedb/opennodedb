@@ -18,4 +18,5 @@ class NodeTransformer extends TransformerAbstract
     {
         return $this->collection($node->connections, new ConnectionTransformer, 'connection');
     }
+
 }

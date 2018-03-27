@@ -8,6 +8,7 @@
                 <div class="panel-heading">Map</div>
 
                 <div class="panel-body">
+                    <nodemap></nodemap>
                 </div>
             </div>
         </div>

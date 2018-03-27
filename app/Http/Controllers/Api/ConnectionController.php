@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Node;
+use App\Connection;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Item;
 use App\Http\Controllers\Controller;
-use App\Transformers\NodeTransformer;
+use App\Transformers\ConnectionTransformer;
 use League\Fractal\Resource\Collection;
 
-class NodeController extends Controller
+class ConnectionController extends Controller
 {
     private $fractal;
 
@@ -20,18 +20,18 @@ class NodeController extends Controller
 
     public function index()
     {
-        $nodes = Node::where('status', 'Online')->get();
+        $connections = Connection::all();
 
-        $resource = new Collection($nodes, new NodeTransformer(), 'node');
+        $resource = new Collection($connections, new ConnectionTransformer(), 'connection');
        
         $data = $this->fractal->createData($resource)->toArray();
 
         return response()->json($data);
     }
 
-    public function show(Node $node)
+    public function show(Connection $connection)
     {
-        $resource = new Item($node, new NodeTransformer(), 'node');
+        $resource = new Item($connection, new ConnectionTransformer(), 'connection');
        
         $data = $this->fractal->createData($resource)->toArray();
 
