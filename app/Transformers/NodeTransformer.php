@@ -14,7 +14,7 @@ class NodeTransformer extends TransformerAbstract
         return $node->toArray();
     }
 
-    public function includelinks(Node $node)
+    public function includeLinks(Node $node)
     {
         return $this->collection($node->links, new LinkTransformer, 'link');
     }
