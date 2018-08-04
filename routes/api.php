@@ -20,6 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/nodes')->uses('Api\NodeController@index')->name('api.nodes.index');
 Route::get('/nodes/{node}')->uses('Api\NodeController@show')->name('api.nodes.show');
 
-Route::get('/connections')->uses('Api\ConnectionController@index')->name('api.connections.index');
-Route::get('/connections/{connection}')->uses('Api\ConnectionController@show')->name('api.connections.show');
+Route::get('/links')->uses('Api\LinkController@index')->name('api.links.index');
+Route::get('/links/{link}')->uses('Api\LinkController@show')->name('api.links.show');
 

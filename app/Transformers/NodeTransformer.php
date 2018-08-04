@@ -7,16 +7,16 @@ use League\Fractal\TransformerAbstract;
 
 class NodeTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['connections'];
+    protected $availableIncludes = ['links'];
 
     public function transform(Node $node)
     {
         return $node->toArray();
     }
 
-    public function includeConnections(Node $node)
+    public function includelinks(Node $node)
     {
-        return $this->collection($node->connections, new ConnectionTransformer, 'connection');
+        return $this->collection($node->links, new LinkTransformer, 'link');
     }
 
 }

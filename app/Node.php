@@ -4,22 +4,13 @@ namespace App;
 
 class Node extends Model
 {
-    public function sourceConnections()
+    public function status()
     {
-        return $this->hasMany(Connection::class, 'source_id');
+        return $this->belongsTo('App\Status');
     }
 
-    public function connections()
+    public function link()
     {
-        return $this->sourceConnections()->orWhere('destination_id', $this->id);
-    }
-
-    public function connectTo(Node $node, string $technology) : Connection
-    {
-        return Connection::create([
-            'source_id' => $this->id,
-            'destination_id' => $node->id,
-            'technology' => $technology,
-        ]);
+        return $this->belongsToMany('App\Link');
     }
 }

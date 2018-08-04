@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Node;
+use App\Link;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Item;
 use App\Http\Controllers\Controller;
-use App\Transformers\NodeTransformer;
+use App\Transformers\LinkTransformer;
 use League\Fractal\Resource\Collection;
 
-class NodeController extends Controller
+class LinkController extends Controller
 {
     private $fractal;
 
@@ -20,20 +20,27 @@ class NodeController extends Controller
 
     public function index()
     {
-        $nodes = Node::whereHas('status', function ($q) {
+        $links = Link::with('node')->with('node.status')->whereHas('node.status', function ($q) {
             $q->where('name', '=', 'OPERATIONAL');
         })->get();
 
-        $resource = new Collection($nodes, new NodeTransformer(), 'node');
-       
+        $activeLinks = [];
+        foreach($links as $link) {
+            if($link->node[0]->status->name == 'OPERATIONAL' && $link->node[1]->status->name == 'OPERATIONAL') {
+                $activeLinks[] = $link;
+            }
+        }
+
+        $resource = new Collection($activeLinks, new LinkTransformer(), 'link');
+        
         $data = $this->fractal->createData($resource)->toArray();
 
         return response()->json($data);
     }
 
-    public function show(Node $node)
+    public function show(Link $link)
     {
-        $resource = new Item($node, new NodeTransformer(), 'node');
+        $resource = new Item($link, new LinkTransformer(), 'link');
        
         $data = $this->fractal->createData($resource)->toArray();
 
